@@ -1,4 +1,4 @@
-package com.example.task_manager_server.dto.responce;
+package com.example.task_manager_server.dto.response;
 
 
 import com.example.task_manager_server.entity.BaseEntity;
@@ -25,7 +25,7 @@ public class DataTableResponse<RES extends ApiResponse> {
     private boolean previous;
     private List<RES> items;
 
-    public DataTableResponse(){
+    public DataTableResponse() {
         page = 1;
         size = 10;
         sort = "id";

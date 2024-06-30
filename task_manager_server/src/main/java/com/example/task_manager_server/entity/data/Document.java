@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-
 @Setter
 @Getter
 @Entity
@@ -18,18 +17,25 @@ public class Document extends BaseEntity {
     private String fileName;
     @Column(name = "file_type", nullable = false)
     private String fileType;
+
+    @Column(name = "fileSize")
+    private Long fileSize;
+
     @Lob
     @Column(nullable = false)
     private byte[] data;
 
-    public Document(String fileName, String fileType, byte[] data) {
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    Task task;
+
+    public Document(String fileName, String fileType, Long fileSize, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
+        this.fileSize = fileSize;
         this.data = data;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "task_id", nullable = false)
-    Task task;
+
 }
 

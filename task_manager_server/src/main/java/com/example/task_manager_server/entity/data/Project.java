@@ -25,10 +25,10 @@ public class Project extends BaseEntity {
     )
     private Set<User> team;
 
-    @OneToMany(mappedBy = "project", cascade=CascadeType.MERGE)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.MERGE)
     private Set<Task> tasks;
 
-    public Project(){
+    public Project() {
         tasks = new HashSet<>();
     }
 }

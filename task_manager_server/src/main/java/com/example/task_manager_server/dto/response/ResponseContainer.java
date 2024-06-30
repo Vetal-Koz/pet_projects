@@ -1,4 +1,4 @@
-package com.example.task_manager_server.dto.responce;
+package com.example.task_manager_server.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

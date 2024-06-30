@@ -1,4 +1,4 @@
-package com.example.task_manager_server.dto.responce;
+package com.example.task_manager_server.dto.response;
 
 
 import com.example.task_manager_server.entity.data.Task;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TaskResponse extends ApiResponse{
+public class TaskResponse extends ApiResponse {
     private String title;
 
     private String description;
@@ -25,7 +25,7 @@ public class TaskResponse extends ApiResponse{
 
     List<DocumentResponse> documents;
 
-    public TaskResponse(Task task){
+    public TaskResponse(Task task) {
         setId(task.getId());
         this.title = task.getTitle();
         this.description = task.getDescription();

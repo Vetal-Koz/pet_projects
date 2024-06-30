@@ -9,5 +9,6 @@ public interface CrudService<E extends BaseEntity> {
     void update(E entity);
     E findById(Long id);
     void delete(Long id);
+
     Collection<E> findAll();
 }

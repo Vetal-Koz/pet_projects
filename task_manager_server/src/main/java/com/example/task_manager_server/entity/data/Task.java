@@ -35,7 +35,7 @@ public class Task extends BaseEntity {
     @Column(name = "accomplish_to")
     private Date accomplishTo;
 
-    @ManyToOne(cascade=CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     User user;
 
@@ -46,8 +46,8 @@ public class Task extends BaseEntity {
     @JoinColumn(name = "project_id")
     Project project;
 
-    public Task(){
-       this.createdAt = new Date();
-       this.documents = new HashSet<>();
+    public Task() {
+        this.createdAt = new Date();
+        this.documents = new HashSet<>();
     }
 }

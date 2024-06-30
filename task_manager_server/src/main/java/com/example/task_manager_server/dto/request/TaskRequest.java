@@ -1,13 +1,18 @@
 package com.example.task_manager_server.dto.request;
 
-import com.example.task_manager_server.dto.responce.UserResponse;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-public class TaskRequest extends ApiRequest{
+@Getter
+@Setter
+public class TaskRequest extends ApiRequest {
     private String title;
     private String description;
+    private String type;
     private Date accomplishTo;
     private Long userId;
+    private Long projectId;
 
 }

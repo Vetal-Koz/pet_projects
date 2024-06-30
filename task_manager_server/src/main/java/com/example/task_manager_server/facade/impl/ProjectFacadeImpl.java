@@ -3,9 +3,10 @@ package com.example.task_manager_server.facade.impl;
 import com.example.task_manager_server.dto.request.AttachUserIdsRequest;
 import com.example.task_manager_server.dto.request.DataTableRequest;
 import com.example.task_manager_server.dto.request.ProjectRequest;
-import com.example.task_manager_server.dto.responce.DataTableResponse;
-import com.example.task_manager_server.dto.responce.ProjectResponse;
-import com.example.task_manager_server.dto.responce.UserResponse;
+import com.example.task_manager_server.dto.response.DataTableResponse;
+import com.example.task_manager_server.dto.response.ProjectRelatedResponse;
+import com.example.task_manager_server.dto.response.ProjectResponse;
+import com.example.task_manager_server.dto.response.UserResponse;
 import com.example.task_manager_server.entity.data.Project;
 import com.example.task_manager_server.facade.ProjectFacade;
 import com.example.task_manager_server.service.ProjectService;
@@ -47,19 +48,6 @@ public class ProjectFacadeImpl implements ProjectFacade {
         return null;
     }
 
-    @Override
-    public DataTableResponse<ProjectResponse> findAllByUserId(Long userId, DataTableRequest request) {
-        Page<Project> page = projectService.findAllByUserId(userId, request);
-        DataTableResponse<ProjectResponse> dataTableResponse = new DataTableResponse<>(page);
-        dataTableResponse.setSort(request.getSort());
-        dataTableResponse.setOrder(request.getOrder());
-        List<ProjectResponse> projectResponseList = page
-                .stream()
-                .map(ProjectResponse::new)
-                .toList();
-        dataTableResponse.setItems(projectResponseList);
-        return dataTableResponse;
-    }
 
     @Override
     public List<UserResponse> findAllByNotInTeamProject(Long projectId) {

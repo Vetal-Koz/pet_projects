@@ -40,7 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project findById(Long id) {
-        return projectRepository.findById(id).orElseThrow(()-> new EntityNotFoundException(ExceptionUtil.ENTITY_NOT_FOUND));
+        return projectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ExceptionUtil.ENTITY_NOT_FOUND));
     }
 
     @Override
@@ -53,15 +53,6 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.findAll();
     }
 
-    @Override
-    public Page<Project> findAllByUserId(Long userId, DataTableRequest request) {
-        Sort sort = Sort.by(
-                request.getOrder().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC,
-                request.getSort());
-
-        Pageable pageable = PageRequest.of(request.getPage() - 1, request.getSize(), sort);
-        return projectRepository.findAllByUserId(userId, pageable);
-    }
 
     @Override
     public List<User> findAllByNotInTeamProject(Long projectId) {
@@ -70,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void attachUsersToProject(Long projectId, List<Long> userIds) {
-        Project project = projectRepository.findById(projectId).orElseThrow(()->new EntityNotFoundException(ExceptionUtil.ENTITY_NOT_FOUND));
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new EntityNotFoundException(ExceptionUtil.ENTITY_NOT_FOUND));
         List<User> users = userRepository.findAllByIdIn(userIds);
         Set<User> attachedUsers = project.getTeam();
         attachedUsers.addAll(users);

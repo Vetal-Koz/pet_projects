@@ -1,4 +1,4 @@
-package com.example.task_manager_server.dto.responce;
+package com.example.task_manager_server.dto.response;
 
 import com.example.task_manager_server.entity.data.Project;
 import lombok.Getter;
@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ProjectResponse extends ApiResponse{
+public class ProjectResponse extends ApiResponse {
     private String title;
     private List<UserResponse> team;
     private List<TaskResponse> tasks;
 
-    public ProjectResponse(Project project){
+    public ProjectResponse(Project project) {
         setId(project.getId());
         this.title = project.getTitle();
         this.team = project.getTeam().stream().map(UserResponse::new).toList();
