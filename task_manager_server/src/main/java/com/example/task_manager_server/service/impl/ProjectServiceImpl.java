@@ -29,13 +29,13 @@ public class ProjectServiceImpl implements ProjectService {
     private final UserRepository userRepository;
 
     @Override
-    public void create(Project entity) {
-        projectRepository.save(entity);
+    public Project create(Project entity) {
+        return projectRepository.save(entity);
     }
 
     @Override
-    public void update(Project entity) {
-        projectRepository.save(entity);
+    public Project update(Project entity) {
+       return projectRepository.save(entity);
     }
 
     @Override

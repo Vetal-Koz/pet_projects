@@ -3,16 +3,14 @@ package com.example.task_manager_server.controller;
 import com.example.task_manager_server.dto.response.DocumentResponse;
 import com.example.task_manager_server.dto.response.MessageContainer;
 import com.example.task_manager_server.dto.response.ResponseContainer;
-import com.example.task_manager_server.entity.data.Document;
 import com.example.task_manager_server.facade.DocumentFacade;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,43 +29,20 @@ public class DocumentController {
     public ResponseEntity<ResponseContainer<DocumentResponse>> uploadFile(
             @RequestParam("file") MultipartFile file,
             @RequestParam("taskId") Long taskId) {
-        try {
-            Document document = documentFacade.saveAttachment(file, taskId);
-            DocumentResponse response = new DocumentResponse(document);
-            response.setFileSize(file.getSize());
-            return ResponseEntity.ok(new ResponseContainer<>(response));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        DocumentResponse response = documentFacade.saveAttachment(file, taskId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseContainer<>(response));
     }
 
     @PostMapping("/multiple")
     public ResponseEntity<ResponseContainer<List<DocumentResponse>>> handleMultipleFilesUpload(
             @RequestParam("files") MultipartFile[] files,
             @RequestParam("taskId") Long taskId) {
-        List<DocumentResponse> responseList = new ArrayList<>();
-        for (MultipartFile file : files) {
-            String fileName = file.getOriginalFilename();
-            try {
-                Document document = documentFacade.saveAttachment(file, taskId);
-                String downloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/download/")
-                        .path(String.valueOf(document.getId()))
-                        .toUriString();
-                DocumentResponse response = new DocumentResponse(fileName,
-                        downloadUrl,
-                        file.getContentType(),
-                        file.getSize());
-                responseList.add(response);
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-        }
-        return ResponseEntity.ok(new ResponseContainer<>(responseList));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseContainer<>(documentFacade.saveFiles(files, taskId)));
     }
 
     @GetMapping("download/{id}")
-    public ResponseEntity<ResponseContainer<MessageContainer>> downloadFile(@PathVariable Long id) {
+    public ResponseEntity<ResponseContainer<MessageContainer>> downloadFile(@Min(1) @PathVariable Long id) {
         documentFacade.downloadToLocalStorage(id);
         return ResponseEntity.ok(new ResponseContainer<>(new MessageContainer("Successfully downloaded the file")));
     }

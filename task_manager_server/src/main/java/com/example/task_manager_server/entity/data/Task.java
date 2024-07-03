@@ -35,7 +35,7 @@ public class Task extends BaseEntity {
     @Column(name = "accomplish_to")
     private Date accomplishTo;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     User user;
 

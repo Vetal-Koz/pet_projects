@@ -18,21 +18,20 @@ import java.util.Collection;
 
 @RequiredArgsConstructor
 @Service
-@Transactional
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
     @Override
-    public void create(Task entity) {
+    public Task create(Task entity) {
         entity.setType(TaskType.TO_DO);
-        taskRepository.save(entity);
+        return taskRepository.save(entity);
     }
 
     @Override
-    public void update(Task entity) {
-        taskRepository.save(entity);
+    public Task update(Task entity) {
+        return taskRepository.save(entity);
     }
 
     @Override
@@ -50,7 +49,6 @@ public class TaskServiceImpl implements TaskService {
     public Collection<Task> findAll() {
         return taskRepository.findAll();
     }
-
 
     @Override
     @Transactional

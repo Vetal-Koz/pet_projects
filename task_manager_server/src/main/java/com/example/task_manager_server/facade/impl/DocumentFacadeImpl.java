@@ -16,17 +16,14 @@ public class DocumentFacadeImpl implements DocumentFacade {
     private final DocumentService documentService;
 
     @Override
-    public Document saveAttachment(MultipartFile file, Long taskId) {
-        try {
-            return documentService.saveAttachment(file, taskId);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public DocumentResponse saveAttachment(MultipartFile file, Long taskId) {
+        return new DocumentResponse(documentService.saveAttachment(file, taskId));
     }
 
     @Override
-    public void saveFiles(MultipartFile[] files, Long taskId) throws Exception {
-        documentService.saveFiles(files, taskId);
+    public List<DocumentResponse> saveFiles(MultipartFile[] files, Long taskId) {
+        List<Document> documents = documentService.saveFiles(files, taskId);
+        return documents.stream().map(DocumentResponse::new).toList();
     }
 
     @Override
