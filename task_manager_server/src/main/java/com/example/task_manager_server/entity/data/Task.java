@@ -1,8 +1,6 @@
 package com.example.task_manager_server.entity.data;
 
 import com.example.task_manager_server.entity.BaseEntity;
-import com.example.task_manager_server.entity.data.Document;
-import com.example.task_manager_server.entity.data.Project;
 import com.example.task_manager_server.entity.user.User;
 import com.example.task_manager_server.type.TaskType;
 import jakarta.persistence.*;

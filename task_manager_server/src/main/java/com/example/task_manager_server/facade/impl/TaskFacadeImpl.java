@@ -1,9 +1,7 @@
 package com.example.task_manager_server.facade.impl;
 
 
-import com.example.task_manager_server.dto.request.DataTableRequest;
 import com.example.task_manager_server.dto.request.TaskRequest;
-import com.example.task_manager_server.dto.response.DataTableResponse;
 import com.example.task_manager_server.dto.response.TaskResponse;
 import com.example.task_manager_server.entity.data.Task;
 import com.example.task_manager_server.facade.TaskFacade;
@@ -11,11 +9,9 @@ import com.example.task_manager_server.service.TaskService;
 import com.example.task_manager_server.type.TaskType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service

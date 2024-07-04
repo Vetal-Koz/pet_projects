@@ -40,77 +40,78 @@ public class UserServiceTest {
     final String correctPassword = "Password1234";
     final String incorrectEmail = "username@domain";
     final DataTableRequest request = new DataTableRequest(1, 10, "id", "asc");
+
     @Test
-    public void shouldBeCreateUserWhereIdIsNotNull(){
+    public void shouldBeCreateUserWhereIdIsNotNull() {
         User user = new User();
         user.setId(id);
 
-        Exception thrown = Assertions.assertThrows(NotValidDataException.class, ()->userService.create(user));
+        Exception thrown = Assertions.assertThrows(NotValidDataException.class, () -> userService.create(user));
 
         assertThat(thrown).isInstanceOf(NotValidDataException.class);
         assertThat(thrown.getMessage()).isEqualTo(ExceptionUtil.USER_ALREADY_EXIST);
     }
 
     @Test
-    public void shouldBeCreateUserWhereEmailIsNull(){
+    public void shouldBeCreateUserWhereEmailIsNull() {
         User user = new User();
 
-        Exception thrown = Assertions.assertThrows(NotValidDataException.class, ()->userService.create(user));
+        Exception thrown = Assertions.assertThrows(NotValidDataException.class, () -> userService.create(user));
 
         assertThat(thrown).isInstanceOf(NotValidDataException.class);
         assertThat(thrown.getMessage()).isEqualTo(ExceptionUtil.EMAIL_IS_NOT_PRESENT);
     }
 
     @Test
-    public void shouldBeCreateUserWhereEmailIsNotValid(){
+    public void shouldBeCreateUserWhereEmailIsNotValid() {
         User user = new User();
         user.setEmail(incorrectEmail);
 
-        Exception thrown = Assertions.assertThrows(NotValidDataException.class, ()-> userService.create(user));
+        Exception thrown = Assertions.assertThrows(NotValidDataException.class, () -> userService.create(user));
 
         assertThat(thrown).isInstanceOf(NotValidDataException.class);
         assertThat(thrown.getMessage()).isEqualTo(ExceptionUtil.EMAIL_IS_NOT_VALID);
     }
 
     @Test
-    public void shouldBeCreateUserWhereEmailIsExist(){
+    public void shouldBeCreateUserWhereEmailIsExist() {
         User user = new User();
         user.setEmail(correctEmail);
         Mockito.when(userRepository.existsByEmail(correctEmail)).thenReturn(true);
 
-        Exception thrown = Assertions.assertThrows(NotValidDataException.class, ()-> userService.create(user));
+        Exception thrown = Assertions.assertThrows(NotValidDataException.class, () -> userService.create(user));
 
         assertThat(thrown).isInstanceOf(NotValidDataException.class);
         assertThat(thrown.getMessage()).isEqualTo(ExceptionUtil.USER_ALREADY_EXIST);
     }
 
     @Test
-    public void shouldBeCreateUserWherePasswordIsNull(){
+    public void shouldBeCreateUserWherePasswordIsNull() {
         User user = new User();
         user.setEmail(correctEmail);
         Mockito.when(userRepository.existsByEmail(correctEmail)).thenReturn(false);
 
-        Exception thrown = Assertions.assertThrows(NotValidDataException.class, ()-> userService.create(user));
+        Exception thrown = Assertions.assertThrows(NotValidDataException.class, () -> userService.create(user));
 
         assertThat(thrown).isInstanceOf(NotValidDataException.class);
         assertThat(thrown.getMessage()).isEqualTo(ExceptionUtil.PASSWORD_IS_NOT_PRESENT);
     }
 
     @Test
-    public void shouldBeCreateUserWherePasswordIsNotValid(){
+    public void shouldBeCreateUserWherePasswordIsNotValid() {
         User user = new User();
         user.setEmail(correctEmail);
         user.setPassword("s");
         Mockito.when(userRepository.existsByEmail(correctEmail)).thenReturn(false);
 
-        Exception thrown = Assertions.assertThrows(NotValidDataException.class, ()-> userService.create(user));
+        Exception thrown = Assertions.assertThrows(NotValidDataException.class, () -> userService.create(user));
 
         assertThat(thrown).isInstanceOf(NotValidDataException.class);
         assertThat(thrown.getMessage()).isEqualTo(ExceptionUtil.PASSWORD_IS_NOT_VALID);
     }
 
     @Test
-    public void shouldBeCreateUserWithCorrectEmailAndPassword(){
+    public void shouldBeCreateUserWithCorrectEmailAndPassword() {
         User user = new User();
         user.setEmail(correctEmail);
         user.setPassword(correctPassword);
@@ -122,7 +123,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldBeFindUserWhereIdIsNotExist(){
+    public void shouldBeFindUserWhereIdIsNotExist() {
         Mockito.when(userRepository.findById(id)).thenReturn(Optional.empty());
 
         Exception thrown = Assertions.assertThrows(EntityNotFoundException.class, () -> userService.findById(id));
@@ -132,7 +133,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldBeFindUserWhereIdIsExist(){
+    public void shouldBeFindUserWhereIdIsExist() {
         Mockito.when(userRepository.findById(id)).thenReturn(Optional.of(new User()));
 
         User user = userService.findById(id);
@@ -141,7 +142,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldBeUpdateUser(){
+    public void shouldBeUpdateUser() {
         User user = new User();
         Mockito.when(userRepository.save(user)).thenReturn(user);
 
@@ -151,7 +152,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldBeFindAllUser(){
+    public void shouldBeFindAllUser() {
         List<User> userList = new ArrayList<>();
         Mockito.when(userRepository.findAll()).thenReturn(userList);
 
@@ -161,7 +162,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldBeFindAllTasksByUserIdWhereUserHasTask(){
+    public void shouldBeFindAllTasksByUserIdWhereUserHasTask() {
         Page<Task> tasks = new PageImpl<>(List.of(new Task()));
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         Pageable pageable = PageRequest.of(0, 10, sort);
@@ -175,7 +176,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldBeFindAllProjectsByUserIdWhereUserHasProjects(){
+    public void shouldBeFindAllProjectsByUserIdWhereUserHasProjects() {
         Page<Project> projectPage = new PageImpl<>(List.of(new Project()));
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         Pageable pageable = PageRequest.of(0, 10, sort);

@@ -1,17 +1,12 @@
 package com.example.task_manager_server.facade.impl;
 
 import com.example.task_manager_server.dto.request.AttachUserIdsRequest;
-import com.example.task_manager_server.dto.request.DataTableRequest;
 import com.example.task_manager_server.dto.request.ProjectRequest;
-import com.example.task_manager_server.dto.response.DataTableResponse;
-import com.example.task_manager_server.dto.response.ProjectRelatedResponse;
 import com.example.task_manager_server.dto.response.ProjectResponse;
 import com.example.task_manager_server.dto.response.UserResponse;
-import com.example.task_manager_server.entity.data.Project;
 import com.example.task_manager_server.facade.ProjectFacade;
 import com.example.task_manager_server.service.ProjectService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
