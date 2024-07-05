@@ -16,8 +16,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
+
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;

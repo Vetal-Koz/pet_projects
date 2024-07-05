@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
@@ -35,4 +36,5 @@ public class UserController {
         DataTableRequest dataTableRequest = new DataTableRequest(page, size, sort, order);
         return ResponseEntity.ok(new ResponseContainer<>(userFacade.findAllProjectsByUserId(userId, dataTableRequest)));
     }
+
 }
