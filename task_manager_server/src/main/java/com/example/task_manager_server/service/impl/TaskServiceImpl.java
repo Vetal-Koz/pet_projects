@@ -4,6 +4,7 @@ import com.example.task_manager_server.entity.data.Project;
 import com.example.task_manager_server.entity.data.Task;
 import com.example.task_manager_server.entity.user.User;
 import com.example.task_manager_server.exception.EntityNotFoundException;
+import com.example.task_manager_server.exception.NotValidDataException;
 import com.example.task_manager_server.repository.data.ProjectRepository;
 import com.example.task_manager_server.repository.data.TaskRepository;
 import com.example.task_manager_server.repository.user.UserRepository;
@@ -53,13 +54,23 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public void create(Task entity, Long userId, Long projectId) {
+    public Task create(Task entity, Long userId, Long projectId) {
+        checkCorrectTask(entity);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionUtil.ENTITY_NOT_FOUND));
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new EntityNotFoundException(ExceptionUtil.ENTITY_NOT_FOUND));
         entity.setProject(project);
         entity.setUser(user);
-        taskRepository.save(entity);
+        return taskRepository.save(entity);
+    }
+
+    private void checkCorrectTask(Task entity){
+        checkIdIsNotNull(entity.getId());
+    }
+    private void checkIdIsNotNull(Long id){
+        if (id != null){
+            throw new NotValidDataException(ExceptionUtil.TASK_ALREADY_EXIST);
+        }
     }
 }

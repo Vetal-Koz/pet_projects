@@ -4,6 +4,7 @@ package com.example.task_manager_server.service.impl;
 import com.example.task_manager_server.entity.data.Project;
 import com.example.task_manager_server.entity.user.User;
 import com.example.task_manager_server.exception.EntityNotFoundException;
+import com.example.task_manager_server.exception.NotValidDataException;
 import com.example.task_manager_server.repository.data.ProjectRepository;
 import com.example.task_manager_server.repository.user.UserRepository;
 import com.example.task_manager_server.service.ProjectService;
@@ -26,6 +27,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project create(Project entity) {
+        checkProjectIsCorrect(entity);
         return projectRepository.save(entity);
     }
 
@@ -62,5 +64,14 @@ public class ProjectServiceImpl implements ProjectService {
         Set<User> attachedUsers = project.getTeam();
         attachedUsers.addAll(users);
         projectRepository.save(project);
+    }
+
+    private void checkProjectIsCorrect(Project project){
+        checkIdIsNotNull(project.getId());
+    }
+    private void checkIdIsNotNull(Long id){
+        if (id != null){
+            throw new NotValidDataException(ExceptionUtil.PROJECT_ALREADY_EXIST);
+        }
     }
 }

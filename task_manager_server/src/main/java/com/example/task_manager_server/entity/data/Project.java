@@ -29,6 +29,7 @@ public class Project extends BaseEntity {
     private Set<Task> tasks;
 
     public Project() {
+        team = new HashSet<>();
         tasks = new HashSet<>();
     }
 }

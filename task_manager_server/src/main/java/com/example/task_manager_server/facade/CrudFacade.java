@@ -7,9 +7,9 @@ import java.util.Collection;
 
 public interface CrudFacade<REQ extends ApiRequest, RES extends ApiResponse> {
 
-    void create(REQ entity);
+    RES create(REQ entity);
 
-    void update(REQ entity, Long id);
+    RES update(REQ entity, Long id);
 
     void delete(Long id);
 

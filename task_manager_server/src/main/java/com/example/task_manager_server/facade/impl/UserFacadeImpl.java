@@ -5,10 +5,12 @@ import com.example.task_manager_server.dto.request.UserRequest;
 import com.example.task_manager_server.dto.response.*;
 import com.example.task_manager_server.entity.data.Project;
 import com.example.task_manager_server.entity.data.Task;
+import com.example.task_manager_server.entity.user.User;
 import com.example.task_manager_server.facade.UserFacade;
 import com.example.task_manager_server.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +38,17 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void create(UserRequest entity) {
-
+    public UserResponse create(UserRequest entity) {
+        User user = new User();
+        BeanUtils.copyProperties(entity, user);
+        return new UserResponse(userService.create(user));
     }
 
     @Override
-    public void update(UserRequest entity, Long id) {
-
+    public UserResponse update(UserRequest entity, Long id) {
+        User user = userService.findById(id);
+        BeanUtils.copyProperties(entity, user);
+        return new UserResponse(userService.update(user));
     }
 
     @Override

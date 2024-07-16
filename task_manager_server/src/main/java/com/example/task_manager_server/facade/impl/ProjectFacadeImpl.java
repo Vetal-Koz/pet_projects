@@ -4,9 +4,11 @@ import com.example.task_manager_server.dto.request.AttachUserIdsRequest;
 import com.example.task_manager_server.dto.request.ProjectRequest;
 import com.example.task_manager_server.dto.response.ProjectResponse;
 import com.example.task_manager_server.dto.response.UserResponse;
+import com.example.task_manager_server.entity.data.Project;
 import com.example.task_manager_server.facade.ProjectFacade;
 import com.example.task_manager_server.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -19,13 +21,17 @@ public class ProjectFacadeImpl implements ProjectFacade {
     private final ProjectService projectService;
 
     @Override
-    public void create(ProjectRequest entity) {
-
+    public ProjectResponse create(ProjectRequest entity) {
+        Project project = new Project();
+        BeanUtils.copyProperties(entity, project);
+        return new ProjectResponse(projectService.create(project));
     }
 
     @Override
-    public void update(ProjectRequest entity, Long id) {
-
+    public ProjectResponse update(ProjectRequest entity, Long id) {
+        Project project = projectService.findById(id);
+        BeanUtils.copyProperties(entity, project);
+        return new ProjectResponse(projectService.update(project));
     }
 
     @Override

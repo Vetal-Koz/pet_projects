@@ -9,6 +9,7 @@ import com.example.task_manager_server.service.TaskService;
 import com.example.task_manager_server.type.TaskType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -20,22 +21,21 @@ public class TaskFacadeImpl implements TaskFacade {
     private final TaskService taskService;
 
     @Override
-    public void create(TaskRequest entity) {
+    public TaskResponse create(TaskRequest entity) {
         Task task = new Task();
         task.setTitle(entity.getTitle());
         task.setDescription(entity.getDescription());
         task.setAccomplishTo(entity.getAccomplishTo());
-        taskService.create(task, entity.getUserId(), entity.getProjectId());
+        return new TaskResponse(
+                taskService.create(task, entity.getUserId(), entity.getProjectId())
+        );
     }
 
     @Override
-    public void update(TaskRequest entity, Long id) {
+    public TaskResponse update(TaskRequest entity, Long id) {
         Task task = taskService.findById(id);
-        task.setTitle(entity.getTitle());
-        task.setType(TaskType.valueOf(entity.getType()));
-        task.setDescription(entity.getDescription());
-        task.setAccomplishTo(entity.getAccomplishTo());
-        taskService.update(task);
+        BeanUtils.copyProperties(entity, task);
+        return new TaskResponse(taskService.update(task));
     }
 
     @Override

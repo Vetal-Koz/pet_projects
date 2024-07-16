@@ -18,7 +18,6 @@ import java.util.Set;
 public class User extends BaseEntity {
     private String email;
     private String password;
-
     private String username;
 
     @Enumerated(EnumType.STRING)
@@ -29,7 +28,6 @@ public class User extends BaseEntity {
 
     @ManyToMany(mappedBy = "team")
     Set<Project> projects;
-
     public User(){
         this.tasks = new HashSet<>();
     }
