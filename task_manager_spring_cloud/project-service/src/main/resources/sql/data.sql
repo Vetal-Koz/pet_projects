@@ -1,0 +1,1 @@
+insert into projects values (default, 'task_manager');

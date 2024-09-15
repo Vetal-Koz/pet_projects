@@ -1,0 +1,26 @@
+server:
+  port: 9090
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: joinment-service
+          uri: lb://joinment-service
+          predicates:
+            - Path=/api/joinments
+        - id: project-service
+          uri: lb://project-service
+          predicates:
+            - Path=/api/projects, /api/projects/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user
+  application:
+    name: api-gateway
+
+eureka:
+  instance:
+    hostname: localhost # or your machine IP
+    prefer-ip-address: true
